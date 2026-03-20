@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Klokd — Beta Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --e:#00E5A0;--v:#BCFF4E;--ink:#0A0A0F;--sl:#111119;
+  --sl2:#16161F;--mist:#F3F4F0;--soft:#E6EBE4;--mid:#737980;
+  --warn:#FF5C5C;--am:#FFB03A;--bl:#4F9EFF;--pu:#9B7FFF;
+  --r:22px;--rm:14px;
+}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'DM Sans','Helvetica Neue',Arial,sans-serif;background:var(--ink);color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--ink);}
+::-webkit-scrollbar-thumb{background:rgba(0,229,160,0.3);border-radius:999px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(1.2rem,4vw,3rem);height:62px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,border-color .3s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(10,10,15,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom-color:rgba(255,255,255,.06);}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.nav-mark{width:34px;height:34px;background:linear-gradient(135deg,var(--e),var(--v));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;color:var(--ink);flex-shrink:0;box-shadow:0 4px 14px rgba(0,229,160,.35);}
+.nav-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-.04em;color:#fff;}
+.nav-cta{display:inline-flex;align-items:center;padding:8px 18px;border-radius:999px;background:linear-gradient(135deg,var(--e),var(--v));color:var(--ink);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s;animation:pulseCta 3s ease-in-out infinite;}
+.nav-cta:hover{opacity:.88;transform:translateY(-1px);}
+@keyframes pulseCta{0%,100%{box-shadow:0 0 0 0 rgba(0,229,160,.4);}50%{box-shadow:0 0 0 8px rgba(0,229,160,0);}}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(6rem,12vw,9rem) clamp(1.2rem,5vw,3rem) clamp(4rem,8vw,6rem);position:relative;overflow:hidden;background:var(--ink);}
+#hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);}
+.hg1{position:absolute;top:-10%;right:-5%;width:clamp(280px,50vw,580px);height:clamp(280px,50vw,580px);border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.13) 0%,transparent 65%);pointer-events:none;}
+.hg2{position:absolute;bottom:-15%;left:-8%;width:clamp(240px,45vw,480px);height:clamp(240px,45vw,480px);border-radius:50%;background:radial-gradient(circle,rgba(188,255,78,.09) 0%,transparent 65%);pointer-events:none;}
+.hg3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(180px,35vw,360px);height:clamp(180px,35vw,360px);border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.05) 0%,transparent 70%);pointer-events:none;}
+.hd1{position:absolute;top:0;right:clamp(80px,15vw,200px);width:1px;height:100%;background:linear-gradient(180deg,transparent,rgba(0,229,160,.15) 40%,rgba(0,229,160,.08) 70%,transparent);pointer-events:none;}
+.hd2{position:absolute;top:0;right:clamp(200px,30vw,380px);width:1px;height:100%;background:linear-gradient(180deg,transparent,rgba(188,255,78,.07) 50%,transparent);pointer-events:none;}
+
+.hero-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;border:1px solid rgba(0,229,160,.3);background:rgba(0,229,160,.07);font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--e);margin-bottom:clamp(1.2rem,3vw,1.8rem);animation:fadeUp .7s .1s cubic-bezier(.22,1,.36,1) both;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--e);box-shadow:0 0 8px var(--e);animation:dotPulse 2s ease-in-out infinite;}
+@keyframes dotPulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero-h{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,9vw,7rem);font-weight:800;letter-spacing:-.04em;line-height:.95;color:#fff;margin-bottom:clamp(1rem,3vw,1.6rem);animation:fadeUp .7s .2s cubic-bezier(.22,1,.36,1) both;}
+.hero-h span{color:var(--e);display:block;}
+.hero-sub{font-size:clamp(.88rem,2.5vw,1.08rem);color:rgba(255,255,255,.42);max-width:500px;margin:0 auto clamp(2rem,5vw,3.2rem);line-height:1.7;font-weight:300;animation:fadeUp .7s .3s cubic-bezier(.22,1,.36,1) both;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s .4s cubic-bezier(.22,1,.36,1) both;}
+.btn-p{padding:14px 28px;border-radius:999px;background:linear-gradient(135deg,var(--e),var(--v));color:var(--ink);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 24px rgba(0,229,160,.3);}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,160,.4);}
+.btn-s{padding:14px 28px;border-radius:999px;background:transparent;color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:all .2s;}
+.btn-s:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.04);}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.3;animation:fadeUp .7s .8s cubic-bezier(.22,1,.36,1) both;}
+.scroll-line{width:1px;height:38px;background:linear-gradient(180deg,transparent,var(--e));animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);}}
+.scroll-lbl{font-size:.52rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--e);}
+
+/* SECTIONS */
+section{padding:clamp(4rem,8vw,7rem) clamp(1.2rem,5vw,3rem);}
+.cont{max-width:940px;margin:0 auto;}
+.eyebrow{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--e);display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.eyebrow::before{content:'';display:inline-block;width:16px;height:1.5px;background:currentColor;border-radius:999px;}
+.sh{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,5vw,2.9rem);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:clamp(2rem,4vw,3.5rem);}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);}
+.rv.on{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.05s;}.d2{transition-delay:.12s;}.d3{transition-delay:.19s;}
+.d4{transition-delay:.26s;}.d5{transition-delay:.33s;}.d6{transition-delay:.40s;}
+
+/* PROBLEM */
+#problem{background:var(--mist);color:var(--ink);}
+#problem .eyebrow{color:var(--warn);}
+#problem .eyebrow::before{background:var(--warn);}
+#problem .sh{color:var(--ink);}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem;}
+.pc{background:#fff;border-radius:var(--r);padding:1.7rem;border:1px solid var(--soft);box-shadow:0 2px 8px rgba(0,0,0,.05),0 8px 32px rgba(0,0,0,.06);}
+.pc-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:13px;}
+.pc-title{font-family:'Syne',sans-serif;font-size:.96rem;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px;}
+.xl{list-style:none;display:grid;gap:6px;}
+.xl li{display:flex;gap:8px;align-items:flex-start;font-size:.78rem;color:var(--mid);line-height:1.55;}
+.xl li::before{content:'✗';color:var(--warn);font-weight:700;flex-shrink:0;margin-top:1px;font-size:.72rem;}
+
+/* HOW IT WORKS */
+#how{background:var(--sl);}
+#how .sh{color:#fff;}
+.loop{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:clamp(.8rem,2vw,0px);position:relative;}
+@media(min-width:640px){.loop::before{content:'';position:absolute;top:27px;left:calc(28px + 4%);right:calc(28px + 4%);height:1px;background:linear-gradient(90deg,var(--e),rgba(0,229,160,.12));z-index:0;}}
+.ls{display:flex;flex-direction:column;align-items:center;text-align:center;flex:1;min-width:96px;position:relative;z-index:1;}
+.sn{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--e),var(--v));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:var(--ink);margin-bottom:13px;flex-shrink:0;box-shadow:0 4px 18px rgba(0,229,160,.35);}
+.si{font-size:1.4rem;margin-bottom:4px;}
+.sn2{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;color:#fff;letter-spacing:-.01em;margin-bottom:4px;}
+.sd{font-size:.63rem;color:rgba(255,255,255,.38);line-height:1.5;max-width:96px;}
+
+/* WHY */
+#why{background:var(--mist);}
+#why .sh{color:var(--ink);}
+#why .eyebrow{color:rgba(10,10,15,.4);}
+#why .eyebrow::before{background:var(--mid);}
+.wg{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:1.1rem;}
+.wc{background:var(--ink);border-radius:var(--r);padding:1.7rem;border:1px solid rgba(255,255,255,.07);box-shadow:0 4px 24px rgba(0,0,0,.15);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+.wc:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(0,0,0,.2);}
+.wc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0;}
+.wc1::before{background:linear-gradient(90deg,var(--e),transparent);}
+.wc2::before{background:linear-gradient(90deg,var(--v),transparent);}
+.wc3::before{background:linear-gradient(90deg,var(--bl),transparent);}
+.wnum{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:9px;background:linear-gradient(135deg,var(--e),var(--v));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.wtitle{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:7px;}
+.wbody{font-size:.76rem;color:rgba(255,255,255,.48);line-height:1.65;}
+
+/* WAITLIST */
+#waitlist{background:var(--ink);position:relative;overflow:hidden;}
+#waitlist::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 30%,transparent 100%);}
+.wlg1{position:absolute;top:-20%;left:-10%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.1) 0%,transparent 65%);pointer-events:none;}
+.wlg2{position:absolute;bottom:-20%;right:-8%;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(188,255,78,.07) 0%,transparent 65%);pointer-events:none;}
+#waitlist .cont{position:relative;text-align:center;}
+#waitlist .sh{color:#fff;}
+.wl-sub{font-size:clamp(.84rem,2vw,.98rem);color:rgba(255,255,255,.42);max-width:480px;margin:0 auto clamp(1.8rem,4vw,2.8rem);line-height:1.7;font-weight:300;}
+.pt{display:inline-flex;background:rgba(255,255,255,.06);border-radius:999px;padding:4px;margin-bottom:clamp(1.4rem,3vw,2rem);border:1px solid rgba(255,255,255,.1);}
+.pb{padding:8px 22px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;background:transparent;color:rgba(255,255,255,.38);}
+.pb.on{background:linear-gradient(135deg,var(--e),var(--v));color:var(--ink);box-shadow:0 2px 12px rgba(0,229,160,.3);}
+.wf{max-width:440px;margin:0 auto;display:grid;gap:9px;}
+.wi{width:100%;padding:13px 17px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--rm);color:#fff;font-family:'DM Sans',sans-serif;font-size:.86rem;transition:border-color .2s,background .2s;outline:none;}
+.wi::placeholder{color:rgba(255,255,255,.28);}
+.wi:focus{border-color:rgba(0,229,160,.4);background:rgba(255,255,255,.09);}
+.ws{width:100%;padding:14px;border-radius:var(--rm);background:linear-gradient(135deg,var(--e),var(--v));color:var(--ink);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;box-shadow:0 4px 24px rgba(0,229,160,.25);}
+.ws:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,160,.4);}
+.wcount{margin-top:1.4rem;font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:.06em;}
+.wcount span{color:var(--e);font-weight:700;font-family:'Syne',sans-serif;font-size:.88rem;}
+.wsuccess{display:none;padding:1.4rem;background:rgba(0,229,160,.07);border:1px solid rgba(0,229,160,.18);border-radius:var(--rm);text-align:center;max-width:440px;margin:0 auto;}
+.wsuccess.on{display:block;}
+.wsuccess-icon{font-size:1.8rem;margin-bottom:8px;}
+.wsuccess-title{font-family:'Syne',sans-serif;font-size:.98rem;font-weight:800;color:#fff;margin-bottom:5px;}
+.wsuccess-body{font-size:.76rem;color:rgba(255,255,255,.48);line-height:1.6;}
+
+/* FOOTER */
+footer{background:var(--sl);padding:clamp(1.4rem,3.5vw,2.2rem) clamp(1.2rem,5vw,3rem);border-top:1px solid rgba(255,255,255,.06);}
+.fi{max-width:940px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.fl{display:flex;flex-direction:column;gap:5px;}
+.flogo{display:flex;align-items:center;gap:8px;}
+.ftag{font-size:.66rem;color:rgba(255,255,255,.28);font-style:italic;}
+.flinks{display:flex;gap:clamp(10px,3vw,22px);flex-wrap:wrap;align-items:center;}
+.flink{font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.24);text-decoration:none;transition:color .2s;}
+.flink:hover{color:var(--e);}
+.fcopy{font-size:.56rem;color:rgba(255,255,255,.14);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-top:.9rem;max-width:940px;margin-left:auto;margin-right:auto;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-mark">K</div>
+    <span class="nav-name">klokd</span>
+  </a>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hg1"></div><div class="hg2"></div><div class="hg3"></div>
+  <div class="hd1"></div><div class="hd2"></div>
+
+  <div class="hero-badge"><div class="bdot"></div>Beta Coming Soon</div>
+
+  <h1 class="hero-h">Show up.<br/><span>Get paid.</span></h1>
+
+  <p class="hero-sub">Kenya's casual labour marketplace. Verified workers. Instant matching. M-Pesa payment within minutes of every shift. Built for Nairobi. Coming soon.</p>
+
+  <div class="hero-ctas">
+    <button class="btn-p" onclick="scrollWL('employer')">I'm an Employer</button>
+    <button class="btn-s" onclick="scrollWL('worker')">I'm a Worker</button>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-lbl">Scroll</span>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="cont">
+    <div class="eyebrow rv">The Problem</div>
+    <h2 class="sh rv d1">Kenya's casual labour market<br/>runs on WhatsApp and luck</h2>
+    <div class="pg">
+      <div class="pc rv d2">
+        <div class="pc-icon" style="background:rgba(255,92,92,.1);">🏢</div>
+        <div class="pc-title">For Employers</div>
+        <ul class="xl">
+          <li>Calling 10 people on WhatsApp to fill one shift</li>
+          <li>No-shows with no recourse and no backup plan</li>
+          <li>No vetting — you don't know who's arriving</li>
+          <li>Cash payments with no record or audit trail</li>
+          <li>Good workers lost, bad ones rehired by mistake</li>
+        </ul>
+      </div>
+      <div class="pc rv d3">
+        <div class="pc-icon" style="background:rgba(255,176,58,.1);">👷</div>
+        <div class="pc-title">For Workers</div>
+        <ul class="xl">
+          <li>Work found through referrals and WhatsApp groups</li>
+          <li>Paid in cash — late, short, or sometimes not at all</li>
+          <li>No employment record and no portable reputation</li>
+          <li>No contract, no WIBA coverage, no protection</li>
+          <li>No way to prove work history for loans or credit</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="cont">
+    <div class="eyebrow rv">How It Works</div>
+    <h2 class="sh rv d1" style="color:#fff;">Six steps. One loop.<br/><span style="color:var(--e);">Every shift.</span></h2>
+    <div class="loop">
+      <div class="ls rv d1"><div class="sn">1</div><div class="si">📋</div><div class="sn2">Post Shift</div><div class="sd">Employer posts in under 2 minutes</div></div>
+      <div class="ls rv d2"><div class="sn">2</div><div class="si">🎯</div><div class="sn2">Match</div><div class="sd">Verified worker matched by proximity &amp; rating</div></div>
+      <div class="ls rv d3"><div class="sn">3</div><div class="si">✍️</div><div class="sn2">Confirm</div><div class="sd">Worker accepts &amp; signs digital contract</div></div>
+      <div class="ls rv d4"><div class="sn">4</div><div class="si">📍</div><div class="sn2">Clock In/Out</div><div class="sd">GPS-verified attendance on site</div></div>
+      <div class="ls rv d5"><div class="sn">5</div><div class="si">💚</div><div class="sn2">M-Pesa Pay</div><div class="sd">Payment released within minutes</div></div>
+      <div class="ls rv d6"><div class="sn">6</div><div class="si">⭐</div><div class="sn2">Rate</div><div class="sd">Both sides build portable reputation</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY KLOKD -->
+<section id="why">
+  <div class="cont">
+    <div class="eyebrow rv">Why Klokd</div>
+    <h2 class="sh rv d1" style="color:var(--ink);">Built different.<br/>Built for Kenya.</h2>
+    <div class="wg">
+      <div class="wc wc1 rv d1"><div class="wnum">01</div><div class="wtitle">Instant</div><div class="wbody">Shift posted in under 2 minutes. Verified worker confirmed in under 10. No phone calls, no WhatsApp groups, no guesswork.</div></div>
+      <div class="wc wc2 rv d2"><div class="wnum">02</div><div class="wtitle">Trusted</div><div class="wbody">Every worker is ID-verified. Every shift has a digital contract. GPS clock-in means attendance is confirmed, not assumed.</div></div>
+      <div class="wc wc3 rv d3"><div class="wnum">03</div><div class="wtitle">M-Pesa Native</div><div class="wbody">Workers paid directly to M-Pesa within minutes of shift completion. No cash. No delays. No disputes. The payment is the promise.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist">
+  <div class="wlg1"></div><div class="wlg2"></div>
+  <div class="cont">
+    <div class="eyebrow rv" style="justify-content:center;">Be First</div>
+    <h2 class="sh rv d1" style="color:#fff;text-align:center;">Beta is coming.<br/><span style="color:var(--e);">Get early access.</span></h2>
+    <p class="wl-sub rv d2">We are onboarding our first 50 employers and 200 workers in Nairobi hospitality. Join the waitlist and we'll reach out when your spot is ready.</p>
+
+    <div class="rv d3" style="display:flex;justify-content:center;">
+      <div class="pt" id="pt">
+        <button class="pb on" id="bE" onclick="setP('employer')">I'm an Employer</button>
+        <button class="pb" id="bW" onclick="setP('worker')">I'm a Worker</button>
+      </div>
+    </div>
+
+    <div class="wf rv d4" id="wf">
+      <input class="wi" type="text" id="wn" placeholder="Your name" autocomplete="name"/>
+      <input class="wi" type="email" id="we" placeholder="Email address" autocomplete="email"/>
+      <input class="wi" type="tel" id="wp" placeholder="Phone number (M-Pesa)" autocomplete="tel"/>
+      <button class="ws" onclick="submit()">Join the Waitlist →</button>
+    </div>
+
+    <div class="wsuccess rv" id="wok">
+      <div class="wsuccess-icon">✅</div>
+      <div class="wsuccess-title">You're on the list.</div>
+      <div class="wsuccess-body">We'll reach out when beta spots open in your area. Klokd is coming soon — and you'll be first to know.</div>
+    </div>
+
+    <div class="wcount rv d5" id="wc"><span id="cn">47</span> people already on the waitlist</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fi">
+    <div class="fl">
+      <div class="flogo">
+        <div class="nav-mark" style="width:27px;height:27px;border-radius:7px;font-size:.78rem;box-shadow:none;">K</div>
+        <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:-.04em;color:#fff;">klokd</span>
+      </div>
+      <div class="ftag">Show up. Get paid.</div>
+    </div>
+    <div class="flinks">
+      <a href="https://klokd.co.ke" class="flink">klokd.co.ke</a>
+      <a href="/cdn-cgi/l/email-protection#157d7079797a557e797a7e713b767a3b7e70" class="flink"><span class="__cf_email__" data-cfemail="4a222f2626250a212625212e64292564212f">[email&#160;protected]</span></a>
+      <a href="https://twitter.com/klokKE" class="flink">@klokKE</a>
+      <span class="flink" style="cursor:default;">Nairobi, Kenya</span>
+    </div>
+  </div>
+  <div class="fcopy">© 2026 Klokd · Beta Coming Soon · Confidential</div>
+  <div style="border-top:1px solid rgba(245,242,237,0.08);margin-top:2rem;padding-top:1.2rem;text-align:center;"><p style="font-family:DM Sans,sans-serif;font-size:0.62rem;font-weight:300;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,242,237,0.3);">A <a href="https://kirimon.co.ke" style="color:rgba(245,242,237,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(245,242,237,0.75)'" onmouseout="this.style.color='rgba(245,242,237,0.45)'">Kirimon Impact Ventures</a> company</p></div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>40);});
+
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('on');});},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+
+var persona='employer';
+function setP(p){
+  persona=p;
+  document.getElementById('bE').classList.toggle('on',p==='employer');
+  document.getElementById('bW').classList.toggle('on',p==='worker');
+  document.getElementById('wp').placeholder=p==='worker'?'Your M-Pesa number':'Phone number (M-Pesa)';
+}
+function scrollWL(p){
+  document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});
+  setTimeout(function(){setP(p);},400);
+}
+
+var subs=[],base=47;
+function submit(){
+  var n=document.getElementById('wn').value.trim();
+  var e=document.getElementById('we').value.trim();
+  var p=document.getElementById('wp').value.trim();
+  if(!n){alert('Please enter your name.');return;}
+  if(!e||!e.includes('@')){alert('Please enter a valid email address.');return;}
+  if(!p){alert('Please enter your phone number.');return;}
+  subs.push({n,e,p,persona,ts:new Date().toISOString()});
+  document.getElementById('wf').style.display='none';
+  document.getElementById('
